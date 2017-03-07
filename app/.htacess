@@ -1,0 +1,7 @@
+RewriteEngine On
+
+RewriteBase /slimrest/
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [QSA,L]
+RewriteRule ^ /slimrest/index.php [QSA,L]
