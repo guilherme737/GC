@@ -12,10 +12,18 @@ class MembroAPI extends Resource {
 
 	public function obterPorId($req, $res, $args){
 
-		// $membros = Membro::find('all',array('conditions' => array()));
-		$membro  = \Membro::find_by_nome('Guilherme');
+		$membros = \Membro::find('all');
+		//$membros  = \Membro::model()->findAll();
 
-		return $this->respond($res, $membro);
+		$json = array_map(function($res){
+		  return $res->to_json();
+		}, $membros);
+
+		//var_dump($json);
+
+
+
+		return $this->respond($res, $json);
 	}
 
 	public function inserir($req, $res, $args){
