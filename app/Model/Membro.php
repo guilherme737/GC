@@ -1,6 +1,6 @@
 <?php
 
-class Membro extends ActiveRecord\Model {
+class Membro extends ModelAbstract { //ActiveRecord\Model {
 
 	static $table_name = "membro";
 

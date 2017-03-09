@@ -3,24 +3,24 @@ namespace SlimRest\Resource;
 
 use \SlimRest\Resource as Resource;
 
-class MembroAPI extends Resource {
+class GrupoAPI extends Resource {
 
 	public function routes(){
 		
-		$this->get('/membro', [$this, 'obterTodos']);
+		$this->get('/grupo', [$this, 'obterTodos']);
 		
-		$this->get("/membro/{id}", [$this, 'obterPorId']);		
+		$this->get("/grupo/{id}", [$this, 'obterPorId']);		
 		
-		$this->post("/membro", [$this, 'inserir']);
+		$this->post("/grupo", [$this, 'inserir']);
 		
-		//$this->patch("/membro/{id}", [$this, 'atualizar']);
+		//$this->patch("/grupo/{id}", [$this, 'atualizar']);
 		
-		$this->delete("/membro/{id}", [$this, 'excluir']);
+		$this->delete("/grupo/{id}", [$this, 'excluir']);
 	}
 
 	public function obterTodos($req, $res, $args){
 
-		$membros = \Membro::find('all');
+		$grupos = \Grupo::find('all');
 		//$membros  = \Membro::model()->findAll();
 
 		/*
@@ -33,7 +33,7 @@ class MembroAPI extends Resource {
 
 
 
-		return $this->respond($res, \Membro::collection_to_array());
+		return $this->respond($res, \Grupo::collection_to_array());
 	}
 
 	public function obterPorId($req, $res, $args) {

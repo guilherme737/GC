@@ -5,9 +5,32 @@ namespace SlimRest;
 class App {
 	public $app;
 	public $database;
+	public $container;
 
 	function __construct($conf){
 		$this->app = new \Slim\App;
+
+		//-- custom
+		$container = $this->app->getContainer();
+
+		$container["jwt"] = function ($container) {
+		    return new StdClass;
+		};
+
+		$this->app->add(new \Slim\Middleware\JwtAuthentication([
+		    
+		    "secret" => "supersecretkeyyoushouldnotcommittogithub",
+		    "callback" => function ($request, $response, $arguments) use ($container) {
+		        $container["jwt"] = $arguments["decoded"];
+		    }
+		    //"callback" => function ($options) use ($app) {
+		    //    $app->jwt = $options["decoded"];
+		    //}
+
+		]));
+		//-- end custom
+
+
 		// configure error logger
 		$this->registerErrorLogger();
 		// configure the database
@@ -16,8 +39,10 @@ class App {
 
 
 	public function route($verb, $route, $callback){
+		
 		if(in_array($verb, ['get', 'put', 'post', 'delete']))
 			return $this->app->$verb($route, $callback);
+
 		throw new \Exception('Invalid HTTP verb');
 	}
 
