@@ -31,7 +31,7 @@ class MembroAPI extends Resource {
 
 		//var_dump($json);
 
-
+		//print_r($this->app);
 
 		return $this->respond($res, \Membro::collection_to_array());
 	}

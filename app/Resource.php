@@ -8,11 +8,15 @@ abstract class Resource {
 
 	public $app;
 
+  public $container;
+
 	public function __construct($app){
 
 		$this->app = $app;
 
 		$this->routes();
+
+    $this->addFiltro();
 	}
 
 	abstract function routes();
@@ -33,6 +37,47 @@ abstract class Resource {
 	public function delete($route, $callback){
 		return $this->app->route('delete', $route, $callback);
 	}
+
+
+  public function addFiltro() {
+
+    //-- custom
+    //$container = $this->app->getContainer();
+
+    //$container["jwt"] = function ($container) {
+    //    return new StdClass;
+    //};
+
+    //print_r($this->app->app);
+    $appInstance = $this->app->app;
+    
+    $appInstance->add(new \Slim\Middleware\JwtAuthentication([
+        
+        "secret" => "supersecretkeyyoushouldnotcommittogithub",
+        "rules" => [
+            new \Slim\Middleware\JwtAuthentication\RequestPathRule([
+                "path" => "/",
+                "passthrough" => ["/membro"]
+            ]),
+            new \Slim\Middleware\JwtAuthentication\RequestMethodRule([
+                "passthrough" => ["OPTIONS"]
+            ])
+        ],
+        "callback" => function ($request, $response, $arguments) use ($appInstance) {
+            $appInstance->jwt = $arguments["decoded"];
+            print_r($appInstance);
+        }
+        //"callback" => function ($options) use ($app) {
+        //    $app->jwt = $options["decoded"];
+        //}
+
+    ]));
+    //-- end custom
+    
+
+
+  }
+
 
     // this method validates jwt token passed in Authorization header and retrive back the token information
   public function authorize($request){
