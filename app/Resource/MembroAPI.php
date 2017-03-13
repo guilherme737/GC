@@ -6,7 +6,7 @@ use \SlimRest\Resource as Resource;
 class MembroAPI extends Resource {
 
 	public function routes(){
-		
+
 		$this->get('/membro', [$this, 'obterTodos']);
 		
 		$this->get("/membro/{id}", [$this, 'obterPorId']);		
@@ -19,6 +19,8 @@ class MembroAPI extends Resource {
 	}
 
 	public function obterTodos($req, $res, $args){
+
+		$autorizado = $this->authorize($req);
 
 		$membros = \Membro::find('all');
 		//$membros  = \Membro::model()->findAll();
@@ -34,6 +36,8 @@ class MembroAPI extends Resource {
 		//print_r($this->app);
 
 		return $this->respond($res, \Membro::collection_to_array());
+
+		//return $this->respond($res, ['autorizado'=>$autorizado]);
 	}
 
 	public function obterPorId($req, $res, $args) {

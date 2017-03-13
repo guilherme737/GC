@@ -2,6 +2,7 @@
 namespace SlimRest\Resource;
 
 use \SlimRest\Resource as Resource;
+use Firebase\JWT\JWT;
 
 class Auth extends Resource{
 
@@ -17,22 +18,22 @@ class Auth extends Resource{
 
 	public function postLogin($req, $res, $args){
 
-		/*
-		$params = $app->request()->getBody();
-	    if ($params['email'] == "login" && $params['password'] == "password") {
-	        $key = "example_key";
+		
+		$params = $req->getBody();
+	    //if ($params['email'] == "login" && $params['password'] == "password") {
+	        $key = "1234";
 	        $token = array(
 	            "id" => "1",
 	            "exp" => time() + (60 * 60 * 24)
 	        );
 	        $jwt = JWT::encode($token, $key);
-	        $app->response->headers->set('Content-Type', 'application/json');
-	        echo json_encode(array("token" => $jwt));
-	    }
-	    */
+	        //$res->headers->set('Content-Type', 'application/json');
+	        //echo json_encode(array("token" => $jwt));
+	    //}
+	    
 
 
-		return $this->respond($res, ['state' => false]);
+		return $this->respond($res, json_encode(array("token" => $jwt)));
 	}
 
 }

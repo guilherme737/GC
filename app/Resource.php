@@ -1,10 +1,12 @@
 <?php
 namespace SlimRest;
 
+use Firebase\JWT\JWT;
+
 abstract class Resource {
 	// for generating JWT auth token
 	// TODO store this in environment variable
-	private $secret_jwt = "th1s1s0n3l0ngf*ck1ns3cr3ty07sh07ldn0tr3v3al";
+	private $secret_jwt = "1234";
 
 	public $app;
 
@@ -17,6 +19,7 @@ abstract class Resource {
 		$this->routes();
 
     $this->addFiltro();
+
 	}
 
 	abstract function routes();
@@ -53,11 +56,11 @@ abstract class Resource {
     
     $appInstance->add(new \Slim\Middleware\JwtAuthentication([
         
-        "secret" => "supersecretkeyyoushouldnotcommittogithub",
+        "secret" => "1234",
         "rules" => [
             new \Slim\Middleware\JwtAuthentication\RequestPathRule([
                 "path" => "/",
-                "passthrough" => ["/membro"]
+                "passthrough" => ["/login"]
             ]),
             new \Slim\Middleware\JwtAuthentication\RequestMethodRule([
                 "passthrough" => ["OPTIONS"]
@@ -65,7 +68,7 @@ abstract class Resource {
         ],
         "callback" => function ($request, $response, $arguments) use ($appInstance) {
             $appInstance->jwt = $arguments["decoded"];
-            print_r($appInstance);
+            print_r($appInstance->jwt);
         }
         //"callback" => function ($options) use ($app) {
         //    $app->jwt = $options["decoded"];
@@ -115,7 +118,7 @@ abstract class Resource {
 
     try {
 
-        return \JWT::decode(
+        return JWT::decode(
             $token,
             $this->secret_jwt,
             ["HS256", "HS512", "HS384", "RS256"]
@@ -128,7 +131,7 @@ abstract class Resource {
 
   public function encodeToken($data){
 
-    return \JWT::encode($data, $this->secret_jwt);
+    return JWT::encode($data, $this->secret_jwt);
 
   }
 }
