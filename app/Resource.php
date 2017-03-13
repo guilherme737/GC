@@ -6,7 +6,7 @@ use Firebase\JWT\JWT;
 abstract class Resource {
 	// for generating JWT auth token
 	// TODO store this in environment variable
-	private $secret_jwt = "1234";
+	//private $secret_jwt = "1234";
 
 	public $app;
 
@@ -44,14 +44,6 @@ abstract class Resource {
 
   public function addFiltro() {
 
-    //-- custom
-    //$container = $this->app->getContainer();
-
-    //$container["jwt"] = function ($container) {
-    //    return new StdClass;
-    //};
-
-    //print_r($this->app->app);
     $appInstance = $this->app->app;
     
     $appInstance->add(new \Slim\Middleware\JwtAuthentication([
@@ -68,20 +60,14 @@ abstract class Resource {
         ],
         "callback" => function ($request, $response, $arguments) use ($appInstance) {
             $appInstance->jwt = $arguments["decoded"];
-            print_r($appInstance->jwt);
-        }
-        //"callback" => function ($options) use ($app) {
-        //    $app->jwt = $options["decoded"];
-        //}
+            //print_r($appInstance->jwt);
+        }        
 
     ]));
-    //-- end custom
     
-
-
   }
 
-
+  /*
     // this method validates jwt token passed in Authorization header and retrive back the token information
   public function authorize($request){
 
@@ -98,7 +84,7 @@ abstract class Resource {
       $token = $matches[1];
     }
 
-    /* Bearer not found, try a cookie. */
+    // Bearer not found, try a cookie. 
     $cookie_params = $request->getCookieParams();
 
     if (isset($cookie_params["token"])) {
@@ -134,4 +120,6 @@ abstract class Resource {
     return JWT::encode($data, $this->secret_jwt);
 
   }
+  */
+
 }

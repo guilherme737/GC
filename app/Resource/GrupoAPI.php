@@ -13,7 +13,7 @@ class GrupoAPI extends Resource {
 		
 		$this->post("/grupo", [$this, 'inserir']);
 		
-		//$this->patch("/grupo/{id}", [$this, 'atualizar']);
+		$this->put("/grupo/{id}", [$this, 'atualizar']);
 		
 		$this->delete("/grupo/{id}", [$this, 'excluir']);
 	}
@@ -21,35 +21,42 @@ class GrupoAPI extends Resource {
 	public function obterTodos($req, $res, $args){
 
 		$grupos = \Grupo::find('all');
-		//$membros  = \Membro::model()->findAll();
-
-		/*
-		$json = array_map(function($res){
-		  return $res->to_json();
-		}, $membros);
-		*/
-
-		//var_dump($json);
-
-
-
+	
 		return $this->respond($res, \Grupo::collection_to_array());
 	}
 
 	public function obterPorId($req, $res, $args) {
 
+		$grupo = \Grupo::find($id);
+
+		return $this->respond($res, $grupo->to_json());
 	}
 
 	public function inserir($req, $res, $args){
+
+		$grupo = new Grupo();
+
+		$grupo->save();
+
 		return $this->respond($res, ['state' => false]);
 	}
 
 	public function atualizar($req, $res, $args) {
 
+		$grupo = \Grupo::find($id);
+
+
+		// some code...
+
+		$grupo->save();
+
 	}
 
 	public function excluir($req, $res, $args) {
 
+		$grupo = \Grupo::find($id);
+
+		$grupo->delete();
 	}
 
 }

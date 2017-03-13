@@ -13,17 +13,14 @@ class MembroAPI extends Resource {
 		
 		$this->post("/membro", [$this, 'inserir']);
 		
-		//$this->patch("/membro/{id}", [$this, 'atualizar']);
+		$this->put("/membro/{id}", [$this, 'atualizar']);
 		
 		$this->delete("/membro/{id}", [$this, 'excluir']);
 	}
 
 	public function obterTodos($req, $res, $args){
 
-		$autorizado = $this->authorize($req);
-
 		$membros = \Membro::find('all');
-		//$membros  = \Membro::model()->findAll();
 
 		/*
 		$json = array_map(function($res){
@@ -31,29 +28,43 @@ class MembroAPI extends Resource {
 		}, $membros);
 		*/
 
-		//var_dump($json);
-
-		//print_r($this->app);
-
 		return $this->respond($res, \Membro::collection_to_array());
-
-		//return $this->respond($res, ['autorizado'=>$autorizado]);
 	}
 
 	public function obterPorId($req, $res, $args) {
 
+		$membro = \Membro::find($id);
+
+		return $this->respond($res, $membro->to_json());
 	}
 
 	public function inserir($req, $res, $args){
+
+		//$membro =  obter membro do request
+
+		$membro = new Membro();
+
+		$membro->save();
+
 		return $this->respond($res, ['state' => false]);
 	}
 
 	public function atualizar($req, $res, $args) {
 
+		$membro = \Membro::find($id);
+
+
+		// some code...
+
+		$membro->save();
+
 	}
 
 	public function excluir($req, $res, $args) {
 
+		$membro = \Membro::find($id);
+
+		$membro->delete();
 	}
 
 }

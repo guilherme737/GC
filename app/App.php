@@ -8,7 +8,12 @@ class App {
 	public $container;
 
 	function __construct($conf){
-		$this->app = new \Slim\App;
+
+		$config = ['settings' => [
+		    'addContentLengthHeader' => false,
+		]];
+
+		$this->app = new \Slim\App($config);
 		// configure error logger
 		$this->registerErrorLogger();
 		// configure the database
