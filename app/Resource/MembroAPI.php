@@ -40,13 +40,19 @@ class MembroAPI extends Resource {
 
 	public function inserir($req, $res, $args){
 
-		//$membro =  obter membro do request
-
-		$membro = new Membro();
+                $atributos = $req->getParsedBody(); 
+            
+		$membro = new \Membro();
+                
+                $membro->nome = $atributos['nome'];
+                
+                $membro->email = $atributos['email'];
+                
+                $membro->celular = $atributos['celular'];
 
 		$membro->save();
 
-		return $this->respond($res, ['state' => false]);
+		return $this->respond($res, ['membro' => $membro]);
 	}
 
 	public function atualizar($req, $res, $args) {

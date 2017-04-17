@@ -5,3 +5,4 @@
 [2017-03-08 14:50:30] logger.CRITICAL: Call to undefined method: model [] []
 [2017-03-08 14:50:30] logger.CRITICAL: Call to undefined method: model [] []
 [2017-03-08 14:50:30] logger.CRITICAL: Call to undefined method: model [] []
+[2017-04-17 04:06:51] logger.CRITICAL: Undefined property: Membro->telefone in /opt/lampp/htdocs/slimrest/vendor/php-activerecord/php-activerecord/lib/Model.php on line 521 [] []
