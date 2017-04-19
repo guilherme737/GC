@@ -33,7 +33,7 @@ class MembroAPI extends Resource {
 
 	public function obterPorId($req, $res, $args) {
 
-		$membro = \Membro::find($id);
+		$membro = \Membro::find($args['id']);
 
 		return $this->respond($res, $membro->to_json());
 	}
