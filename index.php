@@ -1,14 +1,16 @@
 <?php
 
 require_once "vendor/autoload.php";
-$conf = require 'config.php';
 
-$app = new \SlimRest\App($conf);
+$configuracoes = require 'app/config/configuracoes.php';
+
+
+$app = new \SlimRest\App2($configuracoes);
 
 // Register Entity Resource
 // init resources
 new \SlimRest\Resource\Auth($app);
-new \SlimRest\Resource\MembroAPI($app);
+new \SlimRest\membro\MembroAPI($app);
 // end init resources
 
 $app->run();

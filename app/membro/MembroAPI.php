@@ -1,8 +1,11 @@
 <?php
 
-namespace SlimRest\Resource;
+namespace SlimRest\membro;
 
 use \SlimRest\Resource as Resource;
+use SlimRest\membro\MembroRepository as MembroRepository;
+use SlimRest\membro\Membro as Membro;
+//require_once _APP . '/membro/membroRepository.php';
 
 class MembroAPI extends Resource {
 
@@ -23,44 +26,52 @@ class MembroAPI extends Resource {
 
     public function obterTodos($req, $res, $args) {
 
-        //$membros = \Membro::find('all');
+        $membroRepository = new MembroRepository();
 
-        /*
-          $json = array_map(function($res){
-          return $res->to_json();
-          }, $membros);
-         */
+        $membros = $membroRepository->obterTodos();
 
-        return $this->respond($res, \Membro::collection_to_array());
+//        return $res->getBody()->write(json_encode($membros));
+
+        return $this->respond($res, $membros);
     }
 
     public function obterPorId($req, $res, $args) {
+        
+        $membroRepository = new MembroRepository();
 
-        $membro = \Membro::find($args['id']);
+        $membro = $membroRepository->obterPorId($args['id']);
 
-        return $this->respond($res, $membro->attributes());
+        return $this->respond($res, $membro);
     }
 
     public function inserir($req, $res, $args) {
 
         $atributos = $req->getParsedBody();
+        
 
-        $membro = new \Membro();
+        $membro = new Membro();
 
         $membro->nome = $atributos['nome'];
 
         $membro->email = $atributos['email'];
 
         $membro->celular = $atributos['celular'];
+        
+        $membro->funcao = $atributos['funcao'];
 
-        $membro->save();
+//        $membro->save();
+        
+        $membroRepository = new MembroRepository();
+        $membroRepository->inserir($membro);
 
-        return $this->respond($res, ['membro' => $membro]);
+        return $this->respond($res, $membro);
     }
 
     public function atualizar($req, $res, $args) {
+        
+        $membroRepository = new MembroRepository();
 
-        $membro = \Membro::find($args['id']);
+        $membro = $membroRepository->obterPorId($args['id']);
 
         $atributos = $req->getParsedBody();
 
@@ -102,10 +113,8 @@ class MembroAPI extends Resource {
             array(
                 "id" => 5,
                 "descricao" => "Frequentador Assíduo"
-            ),
-            
-        );
-        
+            ),            
+        );        
         return $this->respond($res, $funcoes);
     }
 

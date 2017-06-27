@@ -2,24 +2,25 @@
 
 namespace SlimRest;
 
-class App {
+use Illuminate\Database\Capsule\Manager as Capsule;
+
+class App2 {
 
     public $app;
     public $database;
     public $container;
 
-    function __construct($conf) {
+    function __construct($configuracao) {
 
-        $config = ['settings' => [
-                'addContentLengthHeader' => false,
-                'debug' => true
-        ]];
+        $this->app = new \Slim\App(array(
+            'addContentLengthHeader' => false,
+            'debug' => true
+        ));
 
-        $this->app = new \Slim\App($config);
         // configure error logger
         $this->registerErrorLogger();
-        // configure the database
-        $this->registerDatabase($conf['database']);
+
+        $this->registrarBancoDados($configuracao['database']);
     }
 
     public function route($verb, $route, $callback) {
@@ -61,12 +62,10 @@ class App {
         return $response->withStatus($status)->withHeader('Content-type', 'application/json')->write($data);
     }
 
-    public function registerDatabase($db_conf) {
-        \ActiveRecord\Config::initialize(function($cfg) use ($db_conf) {
-            $cfg->set_model_directory($db_conf['models_dir']);
-            $cfg->set_connections($db_conf['connections']);
-            $cfg->set_default_connection(getenv("LIS_ENV") ? getenv("LIS_ENV") : "development");
-        });
+    public function registrarBancoDados($configuracaoBancoDados) {
+        $capsule = new Capsule;
+        $capsule->addConnection($configuracaoBancoDados);
+        $capsule->bootEloquent();
     }
 
 }
