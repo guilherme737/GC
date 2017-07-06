@@ -22,6 +22,8 @@ class MembroAPI extends Resource {
         $this->delete("/membro/{id}", [$this, 'excluir']);
         
         $this->get('/funcoes', [$this, 'obterFuncoes']);
+
+        $this->get('/membro-pastores', [$this, 'obterPastores']);
     }
 
     public function obterTodos($req, $res, $args) {
@@ -55,9 +57,11 @@ class MembroAPI extends Resource {
 
         $membro->email = $atributos['email'];
 
-        $membro->celular = $atributos['celular'];
+        $membro->telefone = $atributos['telefone'];
         
         $membro->funcao = $atributos['funcao'];
+
+        $membro->lider_id = $atributos['lider_id'];
 
 //        $membro->save();
         
@@ -79,16 +83,30 @@ class MembroAPI extends Resource {
 
         $membro->email = $atributos['email'];
 
-        $membro->celular = $atributos['celular'];
+        $membro->telefone = $atributos['telefone'];
+
+        $membro->funcao = $atributos['funcao'];
 
         $membro->save();
     }
 
     public function excluir($req, $res, $args) {
 
-        $membro = \Membro::find($args['id']);
+        $membroRepository = new MembroRepository();
+
+        $membro = $membroRepository->obterPorId($args['id']);
 
         $membro->delete();
+    }
+
+    public function obterPastores($req, $res, $args) {
+
+        $membroRepository = new MembroRepository();
+
+        $membros = $membroRepository->obterPastores();
+
+        return $this->respond($res, $membros);
+
     }
 
     public function obterFuncoes($req, $res, $args) {

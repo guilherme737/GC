@@ -33,7 +33,7 @@ class Auth extends Resource{
 	    
 
 
-		return $this->respond($res, array("token" => $jwt));
+		return $this->respond($res, array("success" => true,"token" => $jwt));
 	}
 
 }

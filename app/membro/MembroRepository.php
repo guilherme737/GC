@@ -18,12 +18,17 @@ class MembroRepository {
         $membro->save();
     }
     
-    public function alterar() {
-        
+    public function alterar($membro) {
+        $membro->save();
     }
     
-    public function excluir() {
-        
+    public function excluir($id) {
+        $membro = Membro::find($id);
+        $membro->delete();
+    }
+
+    public function obterPastores() {
+        return Membro::where('funcao', '=', 4)->get();
     }
     
 }
