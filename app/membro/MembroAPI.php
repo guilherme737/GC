@@ -24,6 +24,10 @@ class MembroAPI extends Resource {
         $this->get('/funcoes', [$this, 'obterFuncoes']);
 
         $this->get('/membro-pastores', [$this, 'obterPastores']);
+
+        $this->get('/membro-discipuladores-por-pastor/{id}', [$this, 'obterDiscipuladoresPorPastor']);
+
+        $this->get('/membro-lideres-por-discipulador/{id}', [$this, 'obterLideresPorDiscipulador']);
     }
 
     public function obterTodos($req, $res, $args) {
@@ -108,6 +112,27 @@ class MembroAPI extends Resource {
         return $this->respond($res, $membros);
 
     }
+
+    public function obterDiscipuladoresPorPastor($req, $res, $args) {
+
+        $membroRepository = new MembroRepository();
+
+        $membros = $membroRepository->obterDiscipuladoresPorPastor($args['id']);
+
+        return $this->respond($res, $membros);
+
+    }
+
+    public function obterLideresPorDiscipulador($req, $res, $args) {
+
+        $membroRepository = new MembroRepository();
+
+        $membros = $membroRepository->obterLideresPorDiscipulador($args['id']);
+
+        return $this->respond($res, $membros);
+
+    }
+
 
     public function obterFuncoes($req, $res, $args) {
 

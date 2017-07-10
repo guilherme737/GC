@@ -30,5 +30,15 @@ class MembroRepository {
     public function obterPastores() {
         return Membro::where('funcao', '=', 4)->get();
     }
+
+    public function obterDiscipuladoresPorPastor($id) {
+        return Membro::where([['funcao', '=', 3], ['lider_id', $id]])->get();
+    }
+
+    public function obterLideresPorDiscipulador($id) {
+        return Membro::where([['funcao', '=', 2], ['lider_id', $id]])->get();
+    }
+
+
     
 }
