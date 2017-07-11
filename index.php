@@ -11,6 +11,7 @@ $app = new \SlimRest\App2($configuracoes);
 // init resources
 new \SlimRest\Resource\Auth($app);
 new \SlimRest\membro\MembroAPI($app);
+new \SlimRest\frequencia-celula\FrequenciaCelulaAPI($app);
 // end init resources
 
 $app->run();
