@@ -1,13 +1,13 @@
 <?php
 
-namespace SlimRest\frequencia-celula;
+namespace SlimRest\FrequenciaCelula;
 
 use \SlimRest\Resource as Resource;
-use SlimRest\frequencia-celula\frequenciaCelulaRepository as FrequenciaCelulaRepository;
-use SlimRest\frequencia-celula\FrequenciaCelula as FrequenciaCelula;
+use SlimRest\FrequenciaCelula\frequenciaCelulaRepository as FrequenciaCelulaRepository;
+use SlimRest\FrequenciaCelula\FrequenciaCelula as FrequenciaCelula;
 //require_once _APP . '/membro/frequenciaCelulaRepository.php';
 
-class MembroAPI extends Resource {
+class FrequenciaCelulaAPI extends Resource {
 
     public function routes() {
 
@@ -20,7 +20,7 @@ class MembroAPI extends Resource {
         $this->put("/frequencia-celula/{id}", [$this, 'atualizar']);
 
         $this->delete("/frequencia-celula/{id}", [$this, 'excluir']);
-        
+
         $this->get('/frequencia-membros-por-lider/{id}', [$this, 'obterMembrosPorLider']);
     }
 
@@ -36,7 +36,7 @@ class MembroAPI extends Resource {
     }
 
     public function obterPorId($req, $res, $args) {
-        
+
         $frequenciaCelulaRepository = new FrequenciaCelulaRepository();
 
         $frequencia = $frequenciaCelulaRepository->obterPorId($args['id']);
@@ -47,7 +47,7 @@ class MembroAPI extends Resource {
     public function inserir($req, $res, $args) {
 
         $atributos = $req->getParsedBody();
-        
+
 
         $frequencia = new FrequenciaCelula();
 
@@ -56,13 +56,13 @@ class MembroAPI extends Resource {
         $frequencia->email = $atributos['email'];
 
         $frequencia->telefone = $atributos['telefone'];
-        
+
         $frequencia->funcao = $atributos['funcao'];
 
         $frequencia->lider_id = $atributos['lider_id'];
 
 //        $membro->save();
-        
+
         $frequenciaCelulaRepository = new FrequenciaCelulaRepository();
         $frequenciaCelulaRepository->inserir($frequencia);
 
@@ -70,7 +70,7 @@ class MembroAPI extends Resource {
     }
 
     public function atualizar($req, $res, $args) {
-        
+
         $frequenciaCelulaRepository = new FrequenciaCelulaRepository();
 
         $frequencia = $frequenciaCelulaRepository->obterPorId($args['id']);

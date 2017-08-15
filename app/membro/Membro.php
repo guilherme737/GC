@@ -8,5 +8,8 @@ class Membro extends Model {
 
     protected $table = 'membro';
 
-}
+    public function lideres() {
+        return $this->hasMany(Membro::class, 'lider_id', 'id');
+    }
 
+}
