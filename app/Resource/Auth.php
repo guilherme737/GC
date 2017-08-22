@@ -18,19 +18,21 @@ class Auth extends Resource{
 
 	public function postLogin($req, $res, $args){
 
-		
+
 		$params = $req->getBody();
 	    //if ($params['email'] == "login" && $params['password'] == "password") {
 	        $key = "1234";
 	        $token = array(
 	            "id" => "1",
+							"user" => "Guilherme",
+							"pswd" => "123456",
 	            "exp" => time() + (60 * 60 * 24)
 	        );
 	        $jwt = JWT::encode($token, $key);
 	        //$res->headers->set('Content-Type', 'application/json');
 	        //echo json_encode(array("token" => $jwt));
 	    //}
-	    
+
 
 
 		return $this->respond($res, array("success" => true,"token" => $jwt));
