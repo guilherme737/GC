@@ -38,6 +38,10 @@ class MembroRepository {
     public function obterLideresPorDiscipulador($id) {
         return Membro::where([['funcao', '=', 2], ['lider_id', $id]])->get();
     }
+    
+    public function obterMembrosPorLider($id) {
+        return Membro::where([['funcao', '=', 1], ['lider_id', $id]])->get();
+    }
 
 
     
