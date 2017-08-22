@@ -61,7 +61,7 @@ abstract class Resource {
             ],
             "callback" => function ($request, $response, $arguments) use ($appInstance) {
                 $appInstance->jwt = $arguments["decoded"];
-                //print_r($appInstance->jwt);
+                var_dump($appInstance->jwt);
             }
         ]));
     }

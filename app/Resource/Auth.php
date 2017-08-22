@@ -21,11 +21,15 @@ class Auth extends Resource{
 
 		$params = $req->getBody();
 	    //if ($params['email'] == "login" && $params['password'] == "password") {
+
+			//TODO verificar se as credenciais são validas na tabela, retornar os dados para montar o token
+
 	        $key = "1234";
 	        $token = array(
 	            "id" => "1",
 							"user" => "Guilherme",
 							"pswd" => "123456",
+							"funcao" => "2"
 	            "exp" => time() + (60 * 60 * 24)
 	        );
 	        $jwt = JWT::encode($token, $key);
@@ -34,8 +38,9 @@ class Auth extends Resource{
 	    //}
 
 
+		//TODO talvez retornar Nome e função do usuario logado para mostrar no sistema
 
-		return $this->respond($res, array("success" => true,"token" => $jwt));
+		return $this->respond($res, array("success" => true,"token" => $jwt, "user" => "Ricceli Alencar", "funcao" => 2));
 	}
 
 }
