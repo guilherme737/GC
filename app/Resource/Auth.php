@@ -29,7 +29,7 @@ class Auth extends Resource{
 	            "id" => "1",
 							"user" => "Guilherme",
 							"pswd" => "123456",
-							"funcao" => "2"
+							"funcao" => "2",
 	            "exp" => time() + (60 * 60 * 24)
 	        );
 	        $jwt = JWT::encode($token, $key);
