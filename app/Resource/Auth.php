@@ -40,7 +40,7 @@ class Auth extends Resource{
 
 		//TODO talvez retornar Nome e função do usuario logado para mostrar no sistema
 
-		return $this->respond($res, array("success" => true,"token" => $jwt, "user" => "Ricceli Alencar", "funcao" => 2));
+		return $this->respond($res, array("success" => true,"token" => $jwt, "id" => 1, "user" => "Ricceli Alencar", "funcao" => 2));
 	}
 
 }
