@@ -61,7 +61,7 @@ class FrequenciaCelulaAPI extends Resource {
 
         $frequencia->lider_id = $atributos['lider_id'];
 
-//        $membro->save();
+        //TODO montar array objetos de membros (itens)
 
         $frequenciaCelulaRepository = new FrequenciaCelulaRepository();
         $frequenciaCelulaRepository->inserir($frequencia);

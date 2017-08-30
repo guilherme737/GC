@@ -8,7 +8,7 @@ class FrequenciaCelula extends Model {
 
     protected $table = 'frequenciacelula';
 
-    public function membros(){
+    public function frequenciasMembros(){
         return $this->hasMany('\FrequenciaCelulaMembro');
     }
 
