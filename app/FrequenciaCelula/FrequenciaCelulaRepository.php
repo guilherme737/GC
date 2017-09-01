@@ -13,9 +13,10 @@ class FrequenciaCelulaRepository {
         return FrequenciaCelula::find($id);
     }
 
-    public function inserir($frequenciaCelula) {
+    public function inserir($frequenciaCelula, $arrMembros) {
         //FrequenciaCelula::save($frequenciaCelula)->frequenciasMembros()->saveMany($array_de_membros_presentes);
-        $frequenciaCelula->save()->frequenciasMembros()->saveMany($array_de_membros_presentes);
+        $frequenciaCelula->save();
+        $frequenciaCelula->frequenciasMembros()->createMany($arrMembros);
         //$frequenciaCelula->save();
     }
 

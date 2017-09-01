@@ -9,7 +9,11 @@ class FrequenciaCelulaMembro extends Model {
     protected $table = 'frequenciacelulamembro';
 
     public function membro(){
-        return $this->hasOne('\membro\Membro');
+        return $this->hasOne('\membro\Membro', "membro_id");
+    }
+
+    public function frequenciaCelula() {
+        return $this->belongsTo('\FrequenciaCelula');
     }
 
 }

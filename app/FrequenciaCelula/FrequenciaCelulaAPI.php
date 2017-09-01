@@ -3,7 +3,7 @@
 namespace SlimRest\FrequenciaCelula;
 
 use \SlimRest\Resource as Resource;
-use SlimRest\FrequenciaCelula\frequenciaCelulaRepository as FrequenciaCelulaRepository;
+use SlimRest\FrequenciaCelula\FrequenciaCelulaRepository as FrequenciaCelulaRepository;
 use SlimRest\FrequenciaCelula\FrequenciaCelula as FrequenciaCelula;
 //require_once _APP . '/membro/frequenciaCelulaRepository.php';
 
@@ -51,20 +51,24 @@ class FrequenciaCelulaAPI extends Resource {
 
         $frequencia = new FrequenciaCelula();
 
-        $frequencia->nome = $atributos['nome'];
-
-        $frequencia->email = $atributos['email'];
-
-        $frequencia->telefone = $atributos['telefone'];
-
-        $frequencia->funcao = $atributos['funcao'];
-
-        $frequencia->lider_id = $atributos['lider_id'];
+        $frequencia->celula_id = $atributos['celula_id'];
 
         //TODO montar array objetos de membros (itens)
+        // var_dump($atributos['membros']);
+
+        $funcPreencherMembrosPresentes = function($value) {
+            if ($value['presente'] && $value['presente'] == true) {
+                //return $value * 2;
+                return new FrequenciaCelulaMembro(["membro_id" => $value["membro_id"]])
+            }
+
+        };
+
+        $membrosPresentes = array_map(funcPreencherMembrosPresentes, $atributos['membros']);
+
 
         $frequenciaCelulaRepository = new FrequenciaCelulaRepository();
-        $frequenciaCelulaRepository->inserir($frequencia);
+        $frequenciaCelulaRepository->inserir($frequencia, $membrosPresentes);
 
         return $this->respond($res, $frequencia);
     }
