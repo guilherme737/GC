@@ -52,20 +52,25 @@ class FrequenciaCelulaAPI extends Resource {
         $frequencia = new FrequenciaCelula();
 
         $frequencia->celula_id = $atributos['celula_id'];
+        
+        $frequencia->semana = $atributos['semana'];
 
         //TODO montar array objetos de membros (itens)
         // var_dump($atributos['membros']);
 
         $funcPreencherMembrosPresentes = function($value) {
+            
             if ($value['presente'] && $value['presente'] == true) {
-                //return $value * 2;
-                return new FrequenciaCelulaMembro(["membro_id" => $value["membro_id"]])
+                
+                return new FrequenciaCelulaMembro(array(
+                    "membro_id" => $value["id"],
+                    "presente" => $value["presente"]                            
+                ));
             }
 
         };
 
-        $membrosPresentes = array_map(funcPreencherMembrosPresentes, $atributos['membros']);
-
+        $membrosPresentes = array_map($funcPreencherMembrosPresentes, $atributos['membros']);
 
         $frequenciaCelulaRepository = new FrequenciaCelulaRepository();
         $frequenciaCelulaRepository->inserir($frequencia, $membrosPresentes);

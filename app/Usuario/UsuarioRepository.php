@@ -26,6 +26,10 @@ class UsuarioRepository {
         $usuario = Usuario::find($id);
         $usuario->delete();
     }
+    
+    public function obterPorLoginESenha($login, $senha) {
+        return Usuario::where([['login', '=', $login], ['senha', $senha]])->get();
+    }
 
 /*
     public function obterPastores() {
