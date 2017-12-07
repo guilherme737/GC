@@ -31,6 +31,8 @@ class FrequenciaCelulaAPI extends Resource {
         $frequencias = $frequenciaCelulaRepository->obterTodos();
 
 //        return $res->getBody()->write(json_encode($frequencias));
+        
+        var_dump($req->getAttribute("jwt"));
 
         return $this->respond($res, $frequencias);
     }
@@ -47,7 +49,6 @@ class FrequenciaCelulaAPI extends Resource {
     public function inserir($req, $res, $args) {
 
         $atributos = $req->getParsedBody();
-
 
         $frequencia = new FrequenciaCelula();
 

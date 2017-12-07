@@ -12,6 +12,7 @@ abstract class Resource {
 
     public $app;
     public $container;
+    public $jwt;
 
     public function __construct($app) {
 
@@ -49,6 +50,7 @@ abstract class Resource {
         $appInstance = $this->app->app;
 
         $appInstance->add(new \Slim\Middleware\JwtAuthentication([
+            "attribute" => "jwt",
             "secret" => "1234",
             "rules" => [
                 new \Slim\Middleware\JwtAuthentication\RequestPathRule([
@@ -61,9 +63,11 @@ abstract class Resource {
             ],
             "callback" => function ($request, $response, $arguments) use ($appInstance) {
                 $appInstance->jwt = $arguments["decoded"];
-                var_dump($appInstance->jwt);
+                $this->jwt = $arguments["decoded"];
+                //var_dump($appInstance->jwt);
             }
         ]));
+        
     }
 
     /*

@@ -1,11 +1,13 @@
 <?php
 
-namespace SlimRest\Resource;
+namespace SlimRest\Auth;
 
 use \SlimRest\Resource as Resource;
 use Firebase\JWT\JWT;
+use SlimRest\Usuario\Usuario as Usuario;
+use SlimRest\Usuario\UsuarioRepository as UsuarioRepository;
 
-class Auth extends Resource {
+class AuthAPI extends Resource {
 
     public function routes() {
         $this->get('/login', [$this, 'doLogin']);
@@ -23,6 +25,9 @@ class Auth extends Resource {
 //        $params = $req->getBody();
         $atributos = $req->getParsedBody();
         
+        $usuarioRepository = new UsuarioRepository();
+        
+        $usuarioRepository->obterPorLoginESenha($atributos['usuario'], $atributos['senha']);
         
         //TODO verificar se as credenciais são validas na tabela, retornar os dados para montar o token
         if ($atributos['usuario'] == "teste" && $atributos['senha'] == "teste") {

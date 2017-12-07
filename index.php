@@ -9,8 +9,9 @@ $app = new \SlimRest\App2($configuracoes);
 
 // Register Entity Resource
 // init resources
-new \SlimRest\Resource\Auth($app);
+new \SlimRest\Auth\AuthAPI($app);
 new \SlimRest\membro\MembroAPI($app);
+new \SlimRest\Celula\CelulaAPI($app);
 new \SlimRest\FrequenciaCelula\FrequenciaCelulaAPI($app);
 // end init resources
 
